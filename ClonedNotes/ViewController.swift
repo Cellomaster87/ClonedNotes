@@ -28,23 +28,50 @@ class ViewController: UITableViewController {
     
     // MARK: - Action methods
     @IBAction func newFolderTapped(_ sender: Any) {
-        let newFolderAC = UIAlertController(title: "New folder", message: "Type a name for this folder", preferredStyle: .alert)
-        newFolderAC.addTextField()
-        let textField = newFolderAC.textFields?[0]
-        textField?.placeholder = "Name"
-        
-        newFolderAC.addAction(UIAlertAction(title: "Save", style: .default) {
-            [weak self, weak textField] _ in
-            guard let folderName = textField?.text else { return }
-            let newFolder = Folder(name: folderName, notes: [], itemsCount: 0)
-            self?.directories[0].folders.insert(newFolder, at: 0)
+        if directories.count <= 1 {
+            let newFolderAC = UIAlertController(title: "New folder", message: "Type a name for this folder", preferredStyle: .alert)
+            newFolderAC.addTextField()
+            let textField = newFolderAC.textFields?[0]
+            textField?.placeholder = "Name"
             
-            let indexPath = IndexPath(row: 0, section: 0)
-            self?.tableView.insertRows(at: [indexPath], with: .automatic)
-        })
-        
-        newFolderAC.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: nil))
-        present(newFolderAC, animated: true, completion: nil)
+            newFolderAC.addAction(UIAlertAction(title: "Save", style: .default) {
+                [weak self, weak textField] _ in
+                guard let folderName = textField?.text else { return }
+                let newFolder = Folder(name: folderName, notes: [], itemsCount: 0)
+                self?.directories[0].folders.insert(newFolder, at: 0)
+                
+                let indexPath = IndexPath(row: 0, section: 0)
+                self?.tableView.insertRows(at: [indexPath], with: .automatic)
+            })
+            
+            newFolderAC.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: nil))
+            present(newFolderAC, animated: true, completion: nil)
+        } else {
+            let directoryChooserAC = UIAlertController(title: "New folder", message: "Where do you want to add the folder?", preferredStyle: .actionSheet)
+            for (index, directory) in directories.enumerated() {
+                directoryChooserAC.addAction(UIAlertAction(title: directory.name, style: .default, handler: { [weak self] (action) in
+                    let newFolderAC = UIAlertController(title: "New folder", message: "Type a name for this folder", preferredStyle: .alert)
+                    newFolderAC.addTextField()
+                    
+                    let textField = newFolderAC.textFields?[0]
+                    textField?.placeholder = "Name"
+                    
+                    newFolderAC.addAction(UIAlertAction(title: "Save", style: .default) {
+                        [weak self, weak textField] _ in
+                        guard let folderName = textField?.text else { return }
+                        let newFolder = Folder(name: folderName, notes: [], itemsCount: 0)
+                        self?.directories[index].folders.insert(newFolder, at: 0)
+                        
+                        let indexPath = IndexPath(row: 0, section: index)
+                        self?.tableView.insertRows(at: [indexPath], with: .automatic)
+                    })
+                    
+                    newFolderAC.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: nil))
+                    self?.present(newFolderAC, animated: true, completion: nil)
+                }))
+            }
+            present(directoryChooserAC, animated: true, completion: nil)
+        }
     }
     
     @objc func createNewDirectory() {
