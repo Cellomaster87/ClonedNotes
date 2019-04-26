@@ -8,9 +8,19 @@
 
 import UIKit
 
+// to pass data from this view controller (A) to the next one (B)
+protocol ViewControllerDelegate: class {
+    
+}
+
 class ViewController: UITableViewController {
     // MARK: - Outlets & Properties
-    var directories: [Directory] = [Directory(name: "iCloud", folders: [Folder(name: "Notes", notes: [], itemsCount: 0)])]
+    var directories: [Directory]
+
+    required init?(coder aDecoder: NSCoder) {
+        directories = [Directory(name: "iCloud", folders: [Folder(name: "Notes", notes: [], itemsCount: 0)])]
+        super.init(coder: aDecoder)
+    }
 
     // MARK: - View's management
     override func viewDidLoad() {
@@ -110,7 +120,7 @@ class ViewController: UITableViewController {
     
     @objc func deleteRows() {
         if let selectedRows = tableView.indexPathsForSelectedRows {
-            for indexPath in selectedRows {
+            for indexPath in selectedRows.reversed() {
                 let rowToDelete = indexPath.row
                 directories[indexPath.section].folders.remove(at: rowToDelete)
             }
@@ -159,6 +169,18 @@ class ViewController: UITableViewController {
             defaults.set(savedModel, forKey: "model")
         } else {
             print("Failed to save model.")
+        }
+    }
+    
+    // MARK: - Segues
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if segue.identifier == "Enter folder" {
+            if let folderViewController = segue.destination as? FolderTableViewController {
+                if let cell = sender as? UITableViewCell, let indexPath = tableView.indexPath(for: cell) {
+                    folderViewController.title = directories[indexPath.section].folders[indexPath.row].name
+                    folderViewController.notes = directories[indexPath.section].folders[indexPath.row].notes
+                }
+            }
         }
     }
 }
