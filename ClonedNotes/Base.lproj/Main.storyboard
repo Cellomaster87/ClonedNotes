@@ -18,7 +18,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" cocoaTouchSystemColor="groupTableViewBackgroundColor"/>
                         <prototypes>
-                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" accessoryType="disclosureIndicator" indentationWidth="10" reuseIdentifier="Note" textLabel="ztG-Zd-b0z" detailTextLabel="Wp6-kb-5YZ" style="IBUITableViewCellStyleValue1" id="SVv-tH-5z4">
+                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" accessoryType="disclosureIndicator" indentationWidth="10" reuseIdentifier="Folder" textLabel="ztG-Zd-b0z" detailTextLabel="Wp6-kb-5YZ" style="IBUITableViewCellStyleValue1" id="SVv-tH-5z4">
                                 <rect key="frame" x="0.0" y="55.5" width="414" height="44"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="SVv-tH-5z4" id="uFd-el-XF0">
@@ -54,7 +54,7 @@
                         <barButtonItem title="New folder" id="GyV-gm-2Fu">
                             <color key="tintColor" name="systemYellowColor" catalog="System" colorSpace="catalog"/>
                             <connections>
-                                <action selector="newFolderTapped:" destination="5g0-nG-t7T" id="cyB-hg-qqU"/>
+                                <action selector="newFolderTapped:" destination="5g0-nG-t7T" id="UA5-AH-uR8"/>
                             </connections>
                         </barButtonItem>
                     </toolbarItems>
