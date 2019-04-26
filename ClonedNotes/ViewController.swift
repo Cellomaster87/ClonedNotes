@@ -24,6 +24,18 @@ class ViewController: UITableViewController {
         navigationItem.leftBarButtonItem = UIBarButtonItem(title: "New directory", style: .plain, target: self, action: #selector(createNewDirectory))
         
         tableView.allowsMultipleSelectionDuringEditing = true
+        
+        // Loading data
+        let defaults = UserDefaults.standard
+        if let savedModel = defaults.object(forKey: "model") as? Data {
+            let jsonDecoder = JSONDecoder()
+            
+            do {
+                directories = try jsonDecoder.decode([Directory].self, from: savedModel)
+            } catch {
+                print("Failed to load model.")
+            }
+        }
     }
     
     // MARK: - Action methods
@@ -42,6 +54,7 @@ class ViewController: UITableViewController {
                 
                 let indexPath = IndexPath(row: 0, section: 0)
                 self?.tableView.insertRows(at: [indexPath], with: .automatic)
+                self?.saveModel()
             })
             
             newFolderAC.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: nil))
@@ -64,6 +77,7 @@ class ViewController: UITableViewController {
                         
                         let indexPath = IndexPath(row: 0, section: index)
                         self?.tableView.insertRows(at: [indexPath], with: .automatic)
+                        self?.saveModel()
                     })
                     
                     newFolderAC.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: nil))
@@ -87,6 +101,7 @@ class ViewController: UITableViewController {
             self?.directories.insert(newDirectory, at: 0)
             
             self?.tableView.reloadData()
+            self?.saveModel()
         })
         
         newDirectoryAC.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: nil))
@@ -102,11 +117,9 @@ class ViewController: UITableViewController {
             tableView.beginUpdates()
             tableView.deleteRows(at: selectedRows, with: .automatic)
             tableView.endUpdates()
+            saveModel()
         }
     }
-    
-    // MARK: - Helper methods
-    
     
     // MARK: - Table View Data Source
     override func numberOfSections(in tableView: UITableView) -> Int {
@@ -135,5 +148,17 @@ class ViewController: UITableViewController {
         tableView.setEditing(tableView.isEditing, animated: true)
         toolbarItems?[1].isEnabled.toggle()
         navigationItem.rightBarButtonItems?[1].isEnabled.toggle()
+    }
+    
+    // MARK: - Helper methods
+    func saveModel() {
+        let jsonEncoder = JSONEncoder()
+        
+        if let savedModel = try? jsonEncoder.encode(directories) {
+            let defaults = UserDefaults.standard
+            defaults.set(savedModel, forKey: "model")
+        } else {
+            print("Failed to save model.")
+        }
     }
 }
