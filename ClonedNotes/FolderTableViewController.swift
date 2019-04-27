@@ -8,18 +8,12 @@
 
 import UIKit
 
-// to pass data from this VC (B) to the first VC (A)
-protocol FolderTableViewControllerDelegate {
-    func folderTableViewController(_ controller: FolderTableViewController, didFinishAdding item: Note)
-    func folderTableViewController(_ controller: FolderTableViewController, didFinishEditing item: Note)
-    func folderTableViewControllerDidReturn(_ controller: FolderTableViewController)
-}
-
 class FolderTableViewController: UITableViewController {
     var notes = [Note]()
     var originIndexPath = IndexPath(row: 0, section: 0)
+    var delegate: ViewController!
     
-    var delegate: FolderTableViewControllerDelegate?
+//    var delegate: FolderTableViewControllerDelegate?
     let toolbarLabel = UILabel(frame: CGRect(x: 0, y: 0, width: 200, height: 21))
     
     override func viewDidLoad() {
@@ -93,9 +87,9 @@ class FolderTableViewController: UITableViewController {
         notes.append(note)
         toolbarLabel.text = "\(notes.count) notes"
         
+        delegate.updateFolder(at: originIndexPath, with: notes)
         tableView.reloadData()
         saveNotes()
-        delegate?.folderTableViewController(self, didFinishAdding: note)
     }
     
     @objc func deleteNote() {

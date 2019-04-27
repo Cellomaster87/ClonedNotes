@@ -168,6 +168,17 @@ class ViewController: UITableViewController {
         navigationItem.rightBarButtonItems?[1].isEnabled.toggle()
     }
     
+    override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        if let folderViewController = storyboard?.instantiateViewController(withIdentifier: "FolderViewController") as? FolderTableViewController {
+            folderViewController.title = directories[indexPath.section].folders[indexPath.row].name
+            folderViewController.notes = directories[indexPath.section].folders[indexPath.row].notes
+            folderViewController.originIndexPath = indexPath
+            
+            folderViewController.delegate = self
+            navigationController?.pushViewController(folderViewController, animated: true)
+        }
+    }
+    
     // MARK: - Helper methods
     func saveModel() {
         let jsonEncoder = JSONEncoder()
@@ -180,6 +191,14 @@ class ViewController: UITableViewController {
         }
     }
     
+    func updateFolder(at index: IndexPath, with notes: [Note]) {
+        directories[index.section].folders[index.row].notes = notes
+        directories[index.section].folders[index.row].itemsCount = notes.count
+        
+        tableView.reloadData()
+        saveModel()
+    }
+    
     // MARK: - Segues
     override func shouldPerformSegue(withIdentifier identifier: String, sender: Any?) -> Bool {
         // this fixes the selection while editing bug
@@ -189,43 +208,4 @@ class ViewController: UITableViewController {
             return true
         }
     }
-    
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        if segue.identifier == "Enter folder" {
-            if let folderViewController = segue.destination as? FolderTableViewController {
-                if let cell = sender as? UITableViewCell, let indexPath = tableView.indexPath(for: cell) {
-                    folderViewController.title = directories[indexPath.section].folders[indexPath.row].name
-                    folderViewController.notes = directories[indexPath.section].folders[indexPath.row].notes
-                    folderViewController.originIndexPath = indexPath
-                    folderViewController.delegate = self
-                }
-            }
-        }
-    }
-}
-
-extension ViewController: FolderTableViewControllerDelegate {
-    // this one is possibly not used
-    func folderTableViewController(_ controller: FolderTableViewController, didFinishAdding item: Note) {
-        let indexPath = controller.originIndexPath
-        var directoryToEdit = directories[indexPath.section]
-        var folderToEdit = directoryToEdit.folders[indexPath.row]
-        folderToEdit.notes = controller.notes
-        folderToEdit.itemsCount = controller.notes.count
-        print("Notes: \(folderToEdit.notes). Count: \(folderToEdit.itemsCount)")
-        
-        tableView.reloadData()
-        saveModel()
-    }
-    
-    func folderTableViewController(_ controller: FolderTableViewController, didFinishEditing item: Note) {
-        navigationController?.popViewController(animated: true)
-        
-    }
-    
-    func folderTableViewControllerDidReturn(_ controller: FolderTableViewController) {
-        navigationController?.popViewController(animated: true)
-    }
-    
-    
 }

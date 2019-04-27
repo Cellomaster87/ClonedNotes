@@ -41,9 +41,6 @@
                                         </label>
                                     </subviews>
                                 </tableViewCellContentView>
-                                <connections>
-                                    <segue destination="4PZ-EG-Zgs" kind="show" identifier="Enter folder" id="bmY-FJ-Siu"/>
-                                </connections>
                             </tableViewCell>
                         </prototypes>
                         <sections/>
@@ -114,14 +111,13 @@
                         </connections>
                     </tableView>
                     <toolbarItems/>
+                    <simulatedNavigationBarMetrics key="simulatedTopBarMetrics" prompted="NO"/>
                     <simulatedToolbarMetrics key="simulatedBottomBarMetrics"/>
-                    <connections>
-                        <segue destination="5g0-nG-t7T" kind="show" identifier="Exit folder" id="1Kf-Rr-Wnt"/>
-                    </connections>
+                    <splitViewDetailSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="LEZ-Im-hwA" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1920" y="153"/>
+            <point key="canvasLocation" x="1812" y="153"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="NUL-bU-Fra">
@@ -146,8 +142,5 @@
             <point key="canvasLocation" x="140.57971014492756" y="152.67857142857142"/>
         </scene>
     </scenes>
-    <inferredMetricsTieBreakers>
-        <segue reference="1Kf-Rr-Wnt"/>
-    </inferredMetricsTieBreakers>
     <color key="tintColor" name="systemYellowColor" catalog="System" colorSpace="catalog"/>
 </document>
