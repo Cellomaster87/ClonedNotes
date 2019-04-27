@@ -46,8 +46,6 @@ class ViewController: UITableViewController {
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         
-        print(directories)
-        
         tableView.reloadData()
     }
     
@@ -166,6 +164,8 @@ class ViewController: UITableViewController {
     }
     
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        if isEditing { return }
+        
         if let folderViewController = storyboard?.instantiateViewController(withIdentifier: "FolderViewController") as? FolderTableViewController {
             folderViewController.title = directories[indexPath.section].folders[indexPath.row].name
             

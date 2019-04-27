@@ -6,6 +6,7 @@
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14490.49"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
@@ -80,11 +81,11 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <prototypes>
-                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="Note" textLabel="n5X-n1-LqN" detailTextLabel="JTD-U8-qtc" style="IBUITableViewCellStyleSubtitle" id="cit-B9-Qzy">
+                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" accessoryType="disclosureIndicator" indentationWidth="10" reuseIdentifier="Note" textLabel="n5X-n1-LqN" detailTextLabel="JTD-U8-qtc" style="IBUITableViewCellStyleSubtitle" id="cit-B9-Qzy">
                                 <rect key="frame" x="0.0" y="28" width="414" height="44"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="cit-B9-Qzy" id="JP2-sJ-qHh">
-                                    <rect key="frame" x="0.0" y="0.0" width="414" height="43.5"/>
+                                    <rect key="frame" x="0.0" y="0.0" width="376" height="43.5"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
                                         <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" insetsLayoutMarginsFromSafeArea="NO" text="Title" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="n5X-n1-LqN">
@@ -115,6 +116,39 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="LEZ-Im-hwA" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="1812" y="153"/>
+        </scene>
+        <!--Note View Controller-->
+        <scene sceneID="nXh-yL-4Ks">
+            <objects>
+                <viewController storyboardIdentifier="NoteViewController" id="GWQ-1o-7Xh" customClass="NoteViewController" customModule="ClonedNotes" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="8hY-tm-hFn">
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="6Pp-61-WUZ">
+                                <rect key="frame" x="0.0" y="44" width="414" height="818"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                <textInputTraits key="textInputTraits" autocapitalizationType="sentences" smartDashesType="no"/>
+                                <dataDetectorType key="dataDetectorTypes" phoneNumber="YES" link="YES" calendarEvent="YES" lookupSuggestion="YES"/>
+                            </textView>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <constraints>
+                            <constraint firstItem="6Pp-61-WUZ" firstAttribute="bottom" secondItem="7RM-N2-mFR" secondAttribute="bottom" id="Q4d-VO-3Q0"/>
+                            <constraint firstItem="6Pp-61-WUZ" firstAttribute="leading" secondItem="7RM-N2-mFR" secondAttribute="leading" id="ip2-dr-ZXh"/>
+                            <constraint firstItem="6Pp-61-WUZ" firstAttribute="trailing" secondItem="7RM-N2-mFR" secondAttribute="trailing" id="o5V-GZ-YEw"/>
+                            <constraint firstItem="6Pp-61-WUZ" firstAttribute="top" secondItem="7RM-N2-mFR" secondAttribute="top" id="uHj-Yv-ssq"/>
+                        </constraints>
+                        <viewLayoutGuide key="safeArea" id="7RM-N2-mFR"/>
+                    </view>
+                    <connections>
+                        <outlet property="textView" destination="6Pp-61-WUZ" id="96Q-5D-8lp"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="R5x-be-gaT" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="2715.9420289855075" y="153.34821428571428"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="NUL-bU-Fra">

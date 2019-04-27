@@ -14,6 +14,7 @@
 		2D42B348226E2BFD0058423D /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 2D42B346226E2BFD0058423D /* LaunchScreen.storyboard */; };
 		2D524A732273492B00DB399C /* Model.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2D524A722273492B00DB399C /* Model.swift */; };
 		2D524A75227399A400DB399C /* FolderTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2D524A74227399A400DB399C /* FolderTableViewController.swift */; };
+		2D524A772274835400DB399C /* NoteViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2D524A762274835400DB399C /* NoteViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -26,6 +27,7 @@
 		2D42B349226E2BFD0058423D /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		2D524A722273492B00DB399C /* Model.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Model.swift; sourceTree = "<group>"; };
 		2D524A74227399A400DB399C /* FolderTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FolderTableViewController.swift; sourceTree = "<group>"; };
+		2D524A762274835400DB399C /* NoteViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NoteViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -61,6 +63,7 @@
 				2D42B33D226E2BFC0058423D /* AppDelegate.swift */,
 				2D42B33F226E2BFC0058423D /* ViewController.swift */,
 				2D524A74227399A400DB399C /* FolderTableViewController.swift */,
+				2D524A762274835400DB399C /* NoteViewController.swift */,
 				2D524A722273492B00DB399C /* Model.swift */,
 				2D42B341226E2BFC0058423D /* Main.storyboard */,
 				2D42B344226E2BFD0058423D /* Assets.xcassets */,
@@ -144,6 +147,7 @@
 				2D42B340226E2BFC0058423D /* ViewController.swift in Sources */,
 				2D524A75227399A400DB399C /* FolderTableViewController.swift in Sources */,
 				2D42B33E226E2BFC0058423D /* AppDelegate.swift in Sources */,
+				2D524A772274835400DB399C /* NoteViewController.swift in Sources */,
 				2D524A732273492B00DB399C /* Model.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

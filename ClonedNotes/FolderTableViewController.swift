@@ -51,7 +51,11 @@ class FolderTableViewController: UITableViewController {
     override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
         if editingStyle == .delete {
             // Delete the row from the data source
+            notes.remove(at: indexPath.row)
+            
+            tableView.beginUpdates()
             tableView.deleteRows(at: [indexPath], with: .fade)
+            tableView.endUpdates()
         } else if editingStyle == .insert {
             // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view
         }    
@@ -66,10 +70,42 @@ class FolderTableViewController: UITableViewController {
         toolbarItems?.last?.isEnabled.toggle()
     }
     
+    override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        if isEditing { return }
+        
+        if let noteViewController = storyboard?.instantiateViewController(withIdentifier: "NoteViewController") as? NoteViewController {
+            noteViewController.title = notes[indexPath.row].title
+            
+            noteViewController.note = notes[indexPath.row]
+            
+            noteViewController.originIndexPath = indexPath
+            noteViewController.delegate = self
+            
+            navigationController?.pushViewController(noteViewController, animated: true)
+        }
+    }
+    
     // MARK: - Helper methods
     @objc func composeNote() {
-        let note = Note(title: "Test title", text: "Testing the detail text item") // temporary before implementing next screen
-        notes.append(note)
+        // Set a title for the new note
+        let noteTitleAC = UIAlertController(title: "New note", message: "Set a title for your note", preferredStyle: .alert)
+        noteTitleAC.addTextField()
+        let textField = noteTitleAC.textFields?[0]
+        textField?.placeholder = "Name"
+        
+        noteTitleAC.addAction(UIAlertAction(title: "Save", style: .default) {
+            [weak self, weak textField] _ in
+            guard let noteName = textField?.text else { return }
+            let newNote = Note(title: noteName, text: "")
+            self?.notes.insert(newNote, at: 0)
+            
+            let indexPath = IndexPath(row: 0, section: 0)
+            self?.tableView.insertRows(at: [indexPath], with: .automatic)
+        })
+        
+        noteTitleAC.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: nil))
+        present(noteTitleAC, animated: true, completion: nil)
+        
         toolbarLabel.text = "\(notes.count) notes"
         
         delegate.updateFolder(at: originIndexPath, with: notes)
@@ -92,5 +128,13 @@ class FolderTableViewController: UITableViewController {
             tableView.endUpdates()
         }
         isEditing.toggle()
+    }
+    
+    func updateNote(at index: IndexPath, with text: String) {
+        notes[index.row].text = text
+        toolbarLabel.text = "\(notes.count) notes"
+        
+        delegate.updateFolder(at: originIndexPath, with: notes)
+        tableView.reloadData()
     }
 }
