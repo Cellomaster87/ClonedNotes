@@ -17,6 +17,7 @@ protocol FolderTableViewControllerDelegate {
 
 class FolderTableViewController: UITableViewController {
     var notes = [Note]()
+    var originIndexPath = IndexPath(row: 0, section: 0)
     
     var delegate: FolderTableViewControllerDelegate?
     let toolbarLabel = UILabel(frame: CGRect(x: 0, y: 0, width: 200, height: 21))
@@ -39,6 +40,19 @@ class FolderTableViewController: UITableViewController {
         toolbarItems = [deleteButton, flexibleSpace, labelButton, flexibleSpace, composeButton]
         
         tableView.allowsMultipleSelectionDuringEditing = true
+        
+        // Load data
+        let defaults = UserDefaults.standard
+        if let savedNotes = defaults.object(forKey: "notes") as? Data {
+            let jsonDecoder = JSONDecoder()
+
+            do {
+                notes = try jsonDecoder.decode([Note].self, from: savedNotes)
+            } catch {
+                print("Failed to load notes.")
+            }
+            toolbarLabel.text = "\(notes.count) notes"
+        }
     }
 
     // MARK: - Table view data source
@@ -58,6 +72,7 @@ class FolderTableViewController: UITableViewController {
         if editingStyle == .delete {
             // Delete the row from the data source
             tableView.deleteRows(at: [indexPath], with: .fade)
+            saveNotes()
         } else if editingStyle == .insert {
             // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view
         }    
@@ -74,11 +89,13 @@ class FolderTableViewController: UITableViewController {
     
     // MARK: - Helper methods
     @objc func composeNote() {
-        let note = Note(title: "Test title", text: "Testing the detail text item")
+        let note = Note(title: "Test title", text: "Testing the detail text item") // temporary before implementing next screen
         notes.append(note)
         toolbarLabel.text = "\(notes.count) notes"
         
         tableView.reloadData()
+        saveNotes()
+        delegate?.folderTableViewController(self, didFinishAdding: note)
     }
     
     @objc func deleteNote() {
@@ -92,17 +109,20 @@ class FolderTableViewController: UITableViewController {
             tableView.beginUpdates()
             tableView.deleteRows(at: selectedRows, with: .automatic)
             tableView.endUpdates()
-            //            saveModel()
+            saveNotes()
         }
     }
+    
+    func saveNotes() {
+        let jsonEncoder = JSONEncoder()
 
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destination.
-        // Pass the selected object to the new view controller.
+        if let savedNotes = try? jsonEncoder.encode(notes) {
+            let defaults = UserDefaults.standard
+            defaults.set(savedNotes, forKey: "notes")
+        } else {
+            print("Failed to save notes.")
+        }
     }
-    */
+    
+    // MARK: - Navigation
 }
