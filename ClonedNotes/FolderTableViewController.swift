@@ -11,7 +11,7 @@ import UIKit
 class FolderTableViewController: UITableViewController {
     var notes = [Note]()
     var originIndexPath: IndexPath!
-    var delegate: ViewController!
+    weak var delegate: ViewController!
     
     let toolbarLabel = UILabel(frame: CGRect(x: 0, y: 0, width: 200, height: 21))
     
