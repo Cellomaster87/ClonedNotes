@@ -8,11 +8,6 @@
 
 import UIKit
 
-// to pass data from this view controller (A) to the next one (B)
-protocol ViewControllerDelegate: class {
-    
-}
-
 class ViewController: UITableViewController {
     // MARK: - Outlets & Properties
     var directories: [Directory]
@@ -128,7 +123,8 @@ class ViewController: UITableViewController {
     
     @objc func deleteRows() {
         if let selectedRows = tableView.indexPathsForSelectedRows {
-            for indexPath in selectedRows.reversed() {
+            let sortedRows = selectedRows.sorted { $0.row > $1.row }
+            for indexPath in sortedRows {
                 let rowToDelete = indexPath.row
                 directories[indexPath.section].folders.remove(at: rowToDelete)
             }
@@ -171,6 +167,7 @@ class ViewController: UITableViewController {
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         if let folderViewController = storyboard?.instantiateViewController(withIdentifier: "FolderViewController") as? FolderTableViewController {
             folderViewController.title = directories[indexPath.section].folders[indexPath.row].name
+            
             folderViewController.notes = directories[indexPath.section].folders[indexPath.row].notes
             folderViewController.originIndexPath = indexPath
             
