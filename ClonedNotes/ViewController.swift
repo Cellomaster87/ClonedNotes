@@ -196,14 +196,4 @@ class ViewController: UITableViewController {
         tableView.reloadData()
         saveModel()
     }
-    
-    // MARK: - Segues
-    override func shouldPerformSegue(withIdentifier identifier: String, sender: Any?) -> Bool {
-        // this fixes the selection while editing bug
-        if isEditing {
-            return false
-        } else {
-            return true
-        }
-    }
 }
