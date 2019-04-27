@@ -133,6 +133,7 @@ class ViewController: UITableViewController {
             tableView.endUpdates()
             saveModel()
         }
+        isEditing.toggle()
     }
     
     // MARK: - Table View Data Source

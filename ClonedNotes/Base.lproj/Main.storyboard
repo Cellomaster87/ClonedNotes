@@ -111,9 +111,6 @@
                         </connections>
                     </tableView>
                     <toolbarItems/>
-                    <simulatedNavigationBarMetrics key="simulatedTopBarMetrics" prompted="NO"/>
-                    <simulatedToolbarMetrics key="simulatedBottomBarMetrics"/>
-                    <splitViewDetailSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="LEZ-Im-hwA" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>

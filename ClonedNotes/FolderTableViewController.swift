@@ -10,7 +10,7 @@ import UIKit
 
 class FolderTableViewController: UITableViewController {
     var notes = [Note]()
-    var originIndexPath = IndexPath(row: 0, section: 0)
+    var originIndexPath: IndexPath!
     var delegate: ViewController!
     
     let toolbarLabel = UILabel(frame: CGRect(x: 0, y: 0, width: 200, height: 21))
@@ -62,8 +62,8 @@ class FolderTableViewController: UITableViewController {
         super.setEditing(editing, animated: true)
         
         tableView.setEditing(tableView.isEditing, animated: true)
-        toolbarItems?[0].isEnabled.toggle()
-        toolbarItems?[4].isEnabled.toggle()
+        toolbarItems?.first?.isEnabled.toggle()
+        toolbarItems?.last?.isEnabled.toggle()
     }
     
     // MARK: - Helper methods
@@ -91,5 +91,6 @@ class FolderTableViewController: UITableViewController {
             tableView.deleteRows(at: selectedRows, with: .automatic)
             tableView.endUpdates()
         }
+        isEditing.toggle()
     }
 }
